@@ -16,11 +16,14 @@
 
 package io.clertonraf.grpc;
 
+import io.clertonraf.grpc.service.WalletService;
+import io.clertonraf.grpc.service.impl.WalletServiceImpl;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.logging.Logger;
 
 /**
@@ -28,6 +31,8 @@ import java.util.logging.Logger;
  */
 public class WalletServer {
   private static final Logger logger = Logger.getLogger(WalletServer.class.getName());
+
+  private static final WalletService service = new WalletServiceImpl();
 
   private Server server;
 
@@ -78,10 +83,25 @@ public class WalletServer {
 
     @Override
     public void deposit(WalletRequest req, StreamObserver<WalletResponse> responseObserver) {
-      WalletResponse reply = WalletResponse.newBuilder().setMessage("Hello " + req.getUser()).build();
+      WalletResponse reply = WalletResponse
+              .newBuilder()
+              .setMessage("Hello " + req.getUser()+", you made a deposit of "+ req.getAmount()+" "+req.getCurrency())
+              .build();
+
+      service.deposit(req.getUser(), BigDecimal.valueOf(req.getAmount()), req.getCurrency());
+
       responseObserver.onNext(reply);
       responseObserver.onCompleted();
     }
 
+      @Override
+      public void withdraw(WalletRequest req, StreamObserver<WalletResponse> responseObserver) {
+          WalletResponse reply = WalletResponse
+                  .newBuilder()
+                  .setMessage("hey " + req.getUser()+", you made a deposit of "+ req.getAmount()+" "+req.getCurrency())
+                  .build();
+          responseObserver.onNext(reply);
+          responseObserver.onCompleted();
+      }
   }
 }

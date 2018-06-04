@@ -5,7 +5,7 @@ package io.clertonraf.grpc;
 
 /**
  * <pre>
- * The request message containing the user's name.
+ * The request message containing the user's name, the amount and currency.
  * </pre>
  *
  * Protobuf type {@code wallet.WalletRequest}
@@ -350,7 +350,7 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * The request message containing the user's name.
+   * The request message containing the user's name, the amount and currency.
    * </pre>
    *
    * Protobuf type {@code wallet.WalletRequest}

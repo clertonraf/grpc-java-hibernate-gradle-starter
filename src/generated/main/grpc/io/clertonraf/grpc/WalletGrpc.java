@@ -17,7 +17,7 @@ import static io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall;
 
 /**
  * <pre>
- * The greeting service definition.
+ * The Wallet service definition.
  * </pre>
  */
 @javax.annotation.Generated(
@@ -62,6 +62,38 @@ public final class WalletGrpc {
      }
      return getDepositMethod;
   }
+  @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
+  @java.lang.Deprecated // Use {@link #getWithdrawMethod()} instead. 
+  public static final io.grpc.MethodDescriptor<io.clertonraf.grpc.WalletRequest,
+      io.clertonraf.grpc.WalletResponse> METHOD_WITHDRAW = getWithdrawMethod();
+
+  private static volatile io.grpc.MethodDescriptor<io.clertonraf.grpc.WalletRequest,
+      io.clertonraf.grpc.WalletResponse> getWithdrawMethod;
+
+  @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
+  public static io.grpc.MethodDescriptor<io.clertonraf.grpc.WalletRequest,
+      io.clertonraf.grpc.WalletResponse> getWithdrawMethod() {
+    io.grpc.MethodDescriptor<io.clertonraf.grpc.WalletRequest, io.clertonraf.grpc.WalletResponse> getWithdrawMethod;
+    if ((getWithdrawMethod = WalletGrpc.getWithdrawMethod) == null) {
+      synchronized (WalletGrpc.class) {
+        if ((getWithdrawMethod = WalletGrpc.getWithdrawMethod) == null) {
+          WalletGrpc.getWithdrawMethod = getWithdrawMethod = 
+              io.grpc.MethodDescriptor.<io.clertonraf.grpc.WalletRequest, io.clertonraf.grpc.WalletResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(
+                  "wallet.Wallet", "Withdraw"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  io.clertonraf.grpc.WalletRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  io.clertonraf.grpc.WalletResponse.getDefaultInstance()))
+                  .setSchemaDescriptor(new WalletMethodDescriptorSupplier("Withdraw"))
+                  .build();
+          }
+        }
+     }
+     return getWithdrawMethod;
+  }
 
   /**
    * Creates a new async stub that supports all call types for the service
@@ -88,19 +120,29 @@ public final class WalletGrpc {
 
   /**
    * <pre>
-   * The greeting service definition.
+   * The Wallet service definition.
    * </pre>
    */
   public static abstract class WalletImplBase implements io.grpc.BindableService {
 
     /**
      * <pre>
-     * Sends a greeting
+     * Sends a deposit
      * </pre>
      */
     public void deposit(io.clertonraf.grpc.WalletRequest request,
         io.grpc.stub.StreamObserver<io.clertonraf.grpc.WalletResponse> responseObserver) {
       asyncUnimplementedUnaryCall(getDepositMethod(), responseObserver);
+    }
+
+    /**
+     * <pre>
+     *Withdraw
+     * </pre>
+     */
+    public void withdraw(io.clertonraf.grpc.WalletRequest request,
+        io.grpc.stub.StreamObserver<io.clertonraf.grpc.WalletResponse> responseObserver) {
+      asyncUnimplementedUnaryCall(getWithdrawMethod(), responseObserver);
     }
 
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
@@ -112,13 +154,20 @@ public final class WalletGrpc {
                 io.clertonraf.grpc.WalletRequest,
                 io.clertonraf.grpc.WalletResponse>(
                   this, METHODID_DEPOSIT)))
+          .addMethod(
+            getWithdrawMethod(),
+            asyncUnaryCall(
+              new MethodHandlers<
+                io.clertonraf.grpc.WalletRequest,
+                io.clertonraf.grpc.WalletResponse>(
+                  this, METHODID_WITHDRAW)))
           .build();
     }
   }
 
   /**
    * <pre>
-   * The greeting service definition.
+   * The Wallet service definition.
    * </pre>
    */
   public static final class WalletStub extends io.grpc.stub.AbstractStub<WalletStub> {
@@ -139,7 +188,7 @@ public final class WalletGrpc {
 
     /**
      * <pre>
-     * Sends a greeting
+     * Sends a deposit
      * </pre>
      */
     public void deposit(io.clertonraf.grpc.WalletRequest request,
@@ -147,11 +196,22 @@ public final class WalletGrpc {
       asyncUnaryCall(
           getChannel().newCall(getDepositMethod(), getCallOptions()), request, responseObserver);
     }
+
+    /**
+     * <pre>
+     *Withdraw
+     * </pre>
+     */
+    public void withdraw(io.clertonraf.grpc.WalletRequest request,
+        io.grpc.stub.StreamObserver<io.clertonraf.grpc.WalletResponse> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(getWithdrawMethod(), getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
    * <pre>
-   * The greeting service definition.
+   * The Wallet service definition.
    * </pre>
    */
   public static final class WalletBlockingStub extends io.grpc.stub.AbstractStub<WalletBlockingStub> {
@@ -172,18 +232,28 @@ public final class WalletGrpc {
 
     /**
      * <pre>
-     * Sends a greeting
+     * Sends a deposit
      * </pre>
      */
     public io.clertonraf.grpc.WalletResponse deposit(io.clertonraf.grpc.WalletRequest request) {
       return blockingUnaryCall(
           getChannel(), getDepositMethod(), getCallOptions(), request);
     }
+
+    /**
+     * <pre>
+     *Withdraw
+     * </pre>
+     */
+    public io.clertonraf.grpc.WalletResponse withdraw(io.clertonraf.grpc.WalletRequest request) {
+      return blockingUnaryCall(
+          getChannel(), getWithdrawMethod(), getCallOptions(), request);
+    }
   }
 
   /**
    * <pre>
-   * The greeting service definition.
+   * The Wallet service definition.
    * </pre>
    */
   public static final class WalletFutureStub extends io.grpc.stub.AbstractStub<WalletFutureStub> {
@@ -204,7 +274,7 @@ public final class WalletGrpc {
 
     /**
      * <pre>
-     * Sends a greeting
+     * Sends a deposit
      * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<io.clertonraf.grpc.WalletResponse> deposit(
@@ -212,9 +282,21 @@ public final class WalletGrpc {
       return futureUnaryCall(
           getChannel().newCall(getDepositMethod(), getCallOptions()), request);
     }
+
+    /**
+     * <pre>
+     *Withdraw
+     * </pre>
+     */
+    public com.google.common.util.concurrent.ListenableFuture<io.clertonraf.grpc.WalletResponse> withdraw(
+        io.clertonraf.grpc.WalletRequest request) {
+      return futureUnaryCall(
+          getChannel().newCall(getWithdrawMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_DEPOSIT = 0;
+  private static final int METHODID_WITHDRAW = 1;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -235,6 +317,10 @@ public final class WalletGrpc {
       switch (methodId) {
         case METHODID_DEPOSIT:
           serviceImpl.deposit((io.clertonraf.grpc.WalletRequest) request,
+              (io.grpc.stub.StreamObserver<io.clertonraf.grpc.WalletResponse>) responseObserver);
+          break;
+        case METHODID_WITHDRAW:
+          serviceImpl.withdraw((io.clertonraf.grpc.WalletRequest) request,
               (io.grpc.stub.StreamObserver<io.clertonraf.grpc.WalletResponse>) responseObserver);
           break;
         default:
@@ -299,6 +385,7 @@ public final class WalletGrpc {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new WalletFileDescriptorSupplier())
               .addMethod(getDepositMethod())
+              .addMethod(getWithdrawMethod())
               .build();
         }
       }

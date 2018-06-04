@@ -36,9 +36,11 @@ public final class WalletProto {
       "\n\014wallet.proto\022\006wallet\"?\n\rWalletRequest\022" +
       "\014\n\004user\030\001 \001(\t\022\016\n\006amount\030\002 \001(\001\022\020\n\010currenc" +
       "y\030\003 \001(\t\"!\n\016WalletResponse\022\017\n\007message\030\001 \001" +
-      "(\t2D\n\006Wallet\022:\n\007Deposit\022\025.wallet.WalletR" +
-      "equest\032\026.wallet.WalletResponse\"\000B#\n\022io.c" +
-      "lertonraf.grpcB\013WalletProtoP\001b\006proto3"
+      "(\t2\201\001\n\006Wallet\022:\n\007Deposit\022\025.wallet.Wallet" +
+      "Request\032\026.wallet.WalletResponse\"\000\022;\n\010Wit" +
+      "hdraw\022\025.wallet.WalletRequest\032\026.wallet.Wa" +
+      "lletResponse\"\000B#\n\022io.clertonraf.grpcB\013Wa" +
+      "lletProtoP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

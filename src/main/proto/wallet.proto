@@ -6,20 +6,23 @@ option java_multiple_files = true;
 option java_package = "io.clertonraf.grpc";
 option java_outer_classname = "WalletProto";
 
-// The greeting service definition.
+// The Wallet service definition.
 service Wallet {
-  // Sends a greeting
+  // Sends a deposit
   rpc Deposit (WalletRequest) returns (WalletResponse) {}
+
+  //Withdraw
+  rpc Withdraw (WalletRequest) returns (WalletResponse) {}
 }
 
-// The request message containing the user's name.
+// The request message containing the user's name, the amount and currency.
 message WalletRequest {
   string user = 1;
   double amount = 2;
   string currency = 3;
 }
 
-// The response message containing the greetings
+// The response message containing the response
 message WalletResponse {
   string message = 1;
 }

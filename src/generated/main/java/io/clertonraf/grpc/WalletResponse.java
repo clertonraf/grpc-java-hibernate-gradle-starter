@@ -5,7 +5,7 @@ package io.clertonraf.grpc;
 
 /**
  * <pre>
- * The response message containing the greetings
+ * The response message containing the response
  * </pre>
  *
  * Protobuf type {@code wallet.WalletResponse}
@@ -270,7 +270,7 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * The response message containing the greetings
+   * The response message containing the response
    * </pre>
    *
    * Protobuf type {@code wallet.WalletResponse}
