@@ -82,10 +82,6 @@ public class WalletClient {
     logger.info("Deposit: " + response.getMessage());
   }
 
-  /**
-   * Greet server. If provided, the first element of {@code args} is the name to use in the
-   * greeting.
-   */
   public static void main(String[] args) throws Exception {
     WalletClient client = new WalletClient("localhost", 50051);
     try {

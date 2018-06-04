@@ -13,6 +13,8 @@ public class WalletServiceImpl implements WalletService {
     public void deposit(String user, BigDecimal amount, String currency) {
         WalletDAO dao = new WalletDAOImpl();
         Wallet wallet = new Wallet();
+        BigDecimal balance = dao.getWalletById(user).getBalance();
+        System.out.println("My current balance is "+balance);
         wallet.setUser(user);
         wallet.setBalance(amount);
         wallet.setDefaultCurrency("USD");
