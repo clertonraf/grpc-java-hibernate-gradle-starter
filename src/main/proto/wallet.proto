@@ -1,23 +1,25 @@
 syntax = "proto3";
 
-package helloworld;
+package wallet;
 
 option java_multiple_files = true;
 option java_package = "io.clertonraf.grpc";
-option java_outer_classname = "HelloWorldProto";
+option java_outer_classname = "WalletProto";
 
 // The greeting service definition.
-service Greeter {
+service Wallet {
   // Sends a greeting
-  rpc SayHello (HelloRequest) returns (HelloResponse) {}
+  rpc Deposit (WalletRequest) returns (WalletResponse) {}
 }
 
 // The request message containing the user's name.
-message HelloRequest {
-  string name = 1;
+message WalletRequest {
+  string user = 1;
+  double amount = 2;
+  string currency = 3;
 }
 
 // The response message containing the greetings
-message HelloResponse {
+message WalletResponse {
   string message = 1;
 }
