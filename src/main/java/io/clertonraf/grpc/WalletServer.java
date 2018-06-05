@@ -32,7 +32,7 @@ import java.util.logging.Logger;
 public class WalletServer {
   private static final Logger logger = Logger.getLogger(WalletServer.class.getName());
 
-  private static final WalletService service = new WalletServiceImpl();
+  private static final WalletService service = WalletServiceImpl.getInstance();
 
   private Server server;
 
@@ -84,11 +84,11 @@ public class WalletServer {
     @Override
     public void deposit(WalletRequest req, StreamObserver<WalletResponse> responseObserver) {
       WalletResponse reply = WalletResponse
-              .newBuilder()
-              .setMessage("Hello " + req.getUser()+", you made a deposit of "+ req.getAmount()+" "+req.getCurrency())
-              .build();
-
-      service.deposit(req.getUser(), BigDecimal.valueOf(req.getAmount()), req.getCurrency());
+                .newBuilder()
+                .setMessage(
+                        service.deposit(req.getUser(), BigDecimal.valueOf(req.getAmount()), req.getCurrency())
+                )
+                .build();
 
       responseObserver.onNext(reply);
       responseObserver.onCompleted();
@@ -98,7 +98,9 @@ public class WalletServer {
       public void withdraw(WalletRequest req, StreamObserver<WalletResponse> responseObserver) {
           WalletResponse reply = WalletResponse
                   .newBuilder()
-                  .setMessage("hey " + req.getUser()+", you made a withdraw of "+ req.getAmount()+" "+req.getCurrency())
+                  .setMessage(
+                          service.withdraw(req.getUser(), BigDecimal.valueOf(req.getAmount()), req.getCurrency())
+                  )
                   .build();
           responseObserver.onNext(reply);
           responseObserver.onCompleted();

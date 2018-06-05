@@ -7,6 +7,16 @@ import org.hibernate.Session;
 
 public class WalletDAOImpl implements WalletDAO {
 
+    private WalletDAOImpl(){}
+
+    private static class WalletDAOImplHelper {
+        private static final WalletDAOImpl INSTANCE = new WalletDAOImpl();
+    }
+
+    public static WalletDAOImpl getInstance() {
+        return WalletDAOImplHelper.INSTANCE;
+    }
+
     private Session getSession() {
         return HibernateUtil.getSessionFactory().openSession();
     }
@@ -15,7 +25,7 @@ public class WalletDAOImpl implements WalletDAO {
     public void save(Wallet wallet) {
         Session session = getSession();
         session.beginTransaction();
-        session.update(wallet);
+        session.saveOrUpdate(wallet);
         session.getTransaction().commit();
         session.close();
     }

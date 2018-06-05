@@ -7,4 +7,5 @@ public interface WalletDAO {
     void save(Wallet wallet);
 
     Wallet getWalletById(String user);
+
 }

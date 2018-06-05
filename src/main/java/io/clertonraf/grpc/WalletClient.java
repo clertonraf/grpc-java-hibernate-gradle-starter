@@ -67,10 +67,10 @@ public class WalletClient {
     logger.info("Deposit: " + response.getMessage());
   }
 
-  /** Deposit */
-  public void withdraw(String name) {
-    logger.info("Will try to greet " + name + " ...");
-    WalletRequest request = WalletRequest.newBuilder().setUser("Clerton").setAmount(30.3).setCurrency("EUR").build();
+  /** Withdraw */
+  public void withdraw(String user, double amount, String currency)  {
+    logger.info("Will try to greet " + user + " ...");
+    WalletRequest request = WalletRequest.newBuilder().setUser(user).setAmount(amount).setCurrency(currency).build();
     WalletResponse response;
     try {
       response = blockingStub.withdraw(request);
@@ -90,7 +90,9 @@ public class WalletClient {
       if (args.length > 0) {
         user = args[0]; /* Use the arg as the name to greet if provided */
       }
-      client.deposit("kokoro",15.5,"USD");
+      client.withdraw("1",200.0,"USD");
+      client.deposit("1",100.0,"USD");
+        client.withdraw("1",200.0,"USD");
     } finally {
       client.shutdown();
     }
