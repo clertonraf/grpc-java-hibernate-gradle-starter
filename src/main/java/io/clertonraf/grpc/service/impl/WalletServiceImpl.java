@@ -2,16 +2,15 @@ package io.clertonraf.grpc.service.impl;
 
 import io.clertonraf.grpc.dao.WalletDAO;
 import io.clertonraf.grpc.dao.impl.WalletDAOImpl;
+import io.clertonraf.grpc.domain.Currency;
 import io.clertonraf.grpc.domain.Wallet;
 import io.clertonraf.grpc.service.WalletService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
 
 public class WalletServiceImpl implements WalletService {
 
-    private final Logger logger = LoggerFactory.getLogger(WalletServiceImpl.class);
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(WalletServiceImpl.class.getName());
 
     public WalletServiceImpl() {}
 
@@ -32,13 +31,13 @@ public class WalletServiceImpl implements WalletService {
             wallet = new Wallet();
             wallet.setUser(user);
             wallet.setBalance(amount);
-            wallet.setDefaultCurrency("USD");
+            wallet.setDefaultCurrency(Currency.EUR.name());
         }
 
         BigDecimal newBalance = wallet.getBalance().add(amount);
         wallet.setBalance(newBalance);
 
-        logger.debug("My current balance is "+ newBalance.toString());
+        logger.info("My current balance is "+ newBalance.toString());
 
         dao.save(wallet);
 

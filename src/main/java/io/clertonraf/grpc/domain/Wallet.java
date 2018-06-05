@@ -1,9 +1,6 @@
 package io.clertonraf.grpc.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
@@ -12,10 +9,22 @@ public class Wallet {
 
     @Id
     private String user;
+
+    @Version
+    private int version;
+
     private BigDecimal balance;
 
     @Column(name="currency")
     private String defaultCurrency;
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
 
     public String getUser() {
         return user;
