@@ -15,7 +15,7 @@ public class WalletDAOImpl implements WalletDAO {
     public void save(Wallet wallet) {
         Session session = getSession();
         session.beginTransaction();
-        session.save(wallet);
+        session.update(wallet);
         session.getTransaction().commit();
         session.close();
     }

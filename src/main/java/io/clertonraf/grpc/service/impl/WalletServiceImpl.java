@@ -12,12 +12,17 @@ public class WalletServiceImpl implements WalletService {
     @Override
     public void deposit(String user, BigDecimal amount, String currency) {
         WalletDAO dao = new WalletDAOImpl();
-        Wallet wallet = new Wallet();
-        BigDecimal balance = dao.getWalletById(user).getBalance();
-        System.out.println("My current balance is "+balance);
-        wallet.setUser(user);
-        wallet.setBalance(amount);
-        wallet.setDefaultCurrency("USD");
+        Wallet wallet = dao.getWalletById(user);
+        if(wallet == null) {
+            wallet = new Wallet();
+            wallet.setUser(user);
+            wallet.setBalance(amount);
+            wallet.setDefaultCurrency("USD");
+        }
+        BigDecimal newBalance = wallet.getBalance().add(amount);
+        wallet.setBalance(newBalance);
+        System.out.println("My current balance is "+ newBalance.toString());
+
         dao.save(wallet);
     }
 }

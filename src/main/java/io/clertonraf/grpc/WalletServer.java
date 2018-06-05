@@ -98,7 +98,7 @@ public class WalletServer {
       public void withdraw(WalletRequest req, StreamObserver<WalletResponse> responseObserver) {
           WalletResponse reply = WalletResponse
                   .newBuilder()
-                  .setMessage("hey " + req.getUser()+", you made a deposit of "+ req.getAmount()+" "+req.getCurrency())
+                  .setMessage("hey " + req.getUser()+", you made a withdraw of "+ req.getAmount()+" "+req.getCurrency())
                   .build();
           responseObserver.onNext(reply);
           responseObserver.onCompleted();
