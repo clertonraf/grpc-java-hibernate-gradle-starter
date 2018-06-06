@@ -36,7 +36,7 @@ public class WalletServer {
 
   private Server server;
 
-  private void start() throws IOException {
+  public void start() throws IOException {
     /* The port on which the server should run */
     int port = 50051;
     server = ServerBuilder.forPort(port)
@@ -55,7 +55,25 @@ public class WalletServer {
     });
   }
 
-  private void stop() {
+  public void start(int port) throws IOException {
+    /* The port on which the server should run */
+    server = ServerBuilder.forPort(port)
+            .addService(new WalletImpl())
+            .build()
+            .start();
+    logger.info("Server started, listening on " + port);
+    Runtime.getRuntime().addShutdownHook(new Thread() {
+      @Override
+      public void run() {
+        // Use stderr here since the logger may have been reset by its JVM shutdown hook.
+        System.err.println("*** shutting down gRPC server since JVM is shutting down");
+        WalletServer.this.stop();
+        System.err.println("*** server shut down");
+      }
+    });
+  }
+
+  public void stop() {
     if (server != null) {
       server.shutdown();
     }
@@ -64,7 +82,7 @@ public class WalletServer {
   /**
    * Await termination on the main thread since the grpc library uses daemon threads.
    */
-  private void blockUntilShutdown() throws InterruptedException {
+  public void blockUntilShutdown() throws InterruptedException {
     if (server != null) {
       server.awaitTermination();
     }
@@ -86,7 +104,7 @@ public class WalletServer {
       WalletResponse reply = WalletResponse
                 .newBuilder()
                 .setMessage(
-                        service.deposit(req.getUser(), BigDecimal.valueOf(req.getAmount()), req.getCurrency())
+                        service.deposit(Integer.parseInt(req.getUser()), BigDecimal.valueOf(req.getAmount()), req.getCurrency())
                 )
                 .build();
 
@@ -99,11 +117,23 @@ public class WalletServer {
           WalletResponse reply = WalletResponse
                   .newBuilder()
                   .setMessage(
-                          service.withdraw(req.getUser(), BigDecimal.valueOf(req.getAmount()), req.getCurrency())
+                          service.withdraw(Integer.parseInt(req.getUser()), BigDecimal.valueOf(req.getAmount()), req.getCurrency())
                   )
                   .build();
           responseObserver.onNext(reply);
           responseObserver.onCompleted();
+      }
+
+      public void balance(BalanceRequest request, StreamObserver<BalanceResponse> responseObserver) {
+           BalanceResponse reply = BalanceResponse
+                   .newBuilder()
+                   .setAmount(
+                           service.getBalance(Integer.parseInt(request.getUser())).doubleValue()
+                   )
+                   .build();
+
+           responseObserver.onNext(reply);
+           responseObserver.onCompleted();
       }
   }
 }

@@ -12,6 +12,9 @@
         <property name="show_sql">true</property>
         <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="hibernate.hbm2ddl.auto">create</property>
+
+        <!-- Entities -->
+        <mapping class="io.clertonraf.grpc.domain.Account"/>
         <mapping class="io.clertonraf.grpc.domain.Wallet"/>
     </session-factory>
 </hibernate-configuration>

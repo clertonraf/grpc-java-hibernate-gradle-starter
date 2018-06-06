@@ -4,9 +4,9 @@ import java.math.BigDecimal;
 
 public interface WalletService {
 
-    String deposit(String user, BigDecimal amount, String currency);
+    String deposit(int user, BigDecimal amount, String currency);
 
-    String withdraw(String user, BigDecimal amount, String currency);
+    String withdraw(int user, BigDecimal amount, String currency);
 
-    String getBalance(String user);
+    BigDecimal getBalance(int user);
 }

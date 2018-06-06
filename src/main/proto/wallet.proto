@@ -6,13 +6,16 @@ option java_multiple_files = true;
 option java_package = "io.clertonraf.grpc";
 option java_outer_classname = "WalletProto";
 
-// The Wallet service definition.
+// The Account service definition.
 service Wallet {
   // Sends a deposit
   rpc Deposit (WalletRequest) returns (WalletResponse) {}
 
-  //Withdraw
+  // Makes a Withdraw
   rpc Withdraw (WalletRequest) returns (WalletResponse) {}
+
+  // Gets the balance
+  rpc Balance (BalanceRequest) returns (BalanceResponse) {}
 }
 
 // The request message containing the user's name, the amount and currency.
@@ -25,4 +28,12 @@ message WalletRequest {
 // The response message containing the response
 message WalletResponse {
   string message = 1;
+}
+
+message BalanceRequest {
+  string user = 1;
+}
+
+message BalanceResponse {
+  double amount = 1;
 }

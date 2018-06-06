@@ -7,32 +7,20 @@ import java.math.BigDecimal;
 @Table(name="wallet")
 public class Wallet {
 
-    @Id
-    private String user;
+    @Id @GeneratedValue
+    private int walletId;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Account account;
 
     @Version
     private int version;
 
+    @Enumerated(EnumType.STRING)
+    private Currency currency;
+
+    @Column(nullable = false)
     private BigDecimal balance;
-
-    @Column(name="currency")
-    private String defaultCurrency;
-
-    public int getVersion() {
-        return version;
-    }
-
-    public void setVersion(int version) {
-        this.version = version;
-    }
-
-    public String getUser() {
-        return user;
-    }
-
-    public void setUser(String user) {
-        this.user = user;
-    }
 
     public BigDecimal getBalance() {
         return balance;
@@ -42,11 +30,35 @@ public class Wallet {
         this.balance = balance;
     }
 
-    public String getDefaultCurrency() {
-        return defaultCurrency;
+    public int getWalletId() {
+        return walletId;
     }
 
-    public void setDefaultCurrency(String defaultCurrency) {
-        this.defaultCurrency = defaultCurrency;
+    public void setWalletId(int walletId) {
+        this.walletId = walletId;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
+
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
     }
 }

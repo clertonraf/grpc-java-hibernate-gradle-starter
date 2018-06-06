@@ -46,6 +46,7 @@ public class WalletClient {
   WalletClient(ManagedChannel channel) {
     this.channel = channel;
     blockingStub = WalletGrpc.newBlockingStub(channel);
+    logger.info("Client started");
   }
 
   public void shutdown() throws InterruptedException {
@@ -68,7 +69,7 @@ public class WalletClient {
   }
 
   /** Withdraw */
-  public void withdraw(String user, double amount, String currency)  {
+  public String withdraw(String user, double amount, String currency)  {
     logger.info("Will try to greet " + user + " ...");
     WalletRequest request = WalletRequest.newBuilder().setUser(user).setAmount(amount).setCurrency(currency).build();
     WalletResponse response;
@@ -76,11 +77,28 @@ public class WalletClient {
       response = blockingStub.withdraw(request);
     } catch (StatusRuntimeException e) {
       logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
-      return;
+      return null;
     }
 
     logger.info("Deposit: " + response.getMessage());
+    return response.getMessage();
   }
+
+    /** Balance */
+    public Double getBalance(String user)  {
+        logger.info("Will try to greet " + user + " ...");
+        BalanceRequest request = BalanceRequest.newBuilder().setUser(user).build();
+        BalanceResponse response;
+        try {
+            response = blockingStub.balance(request);
+        } catch (StatusRuntimeException e) {
+            logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
+            return null;
+        }
+
+        logger.info("Deposit: " + response.getAmount());
+        return response.getAmount();
+    }
 
   public static void main(String[] args) throws Exception {
     WalletClient client = new WalletClient("localhost", 50051);
@@ -90,9 +108,6 @@ public class WalletClient {
       if (args.length > 0) {
         user = args[0]; /* Use the arg as the name to greet if provided */
       }
-      client.withdraw("1",200.0,"USD");
-      client.deposit("1",100.0,"USD");
-        client.withdraw("1",200.0,"USD");
     } finally {
       client.shutdown();
     }

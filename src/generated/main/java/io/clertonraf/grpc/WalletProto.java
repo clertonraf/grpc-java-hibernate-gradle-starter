@@ -24,6 +24,16 @@ public final class WalletProto {
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_wallet_WalletResponse_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_wallet_BalanceRequest_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_wallet_BalanceRequest_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_wallet_BalanceResponse_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_wallet_BalanceResponse_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -36,11 +46,14 @@ public final class WalletProto {
       "\n\014wallet.proto\022\006wallet\"?\n\rWalletRequest\022" +
       "\014\n\004user\030\001 \001(\t\022\016\n\006amount\030\002 \001(\001\022\020\n\010currenc" +
       "y\030\003 \001(\t\"!\n\016WalletResponse\022\017\n\007message\030\001 \001" +
-      "(\t2\201\001\n\006Wallet\022:\n\007Deposit\022\025.wallet.Wallet" +
-      "Request\032\026.wallet.WalletResponse\"\000\022;\n\010Wit" +
-      "hdraw\022\025.wallet.WalletRequest\032\026.wallet.Wa" +
-      "lletResponse\"\000B#\n\022io.clertonraf.grpcB\013Wa" +
-      "lletProtoP\001b\006proto3"
+      "(\t\"\036\n\016BalanceRequest\022\014\n\004user\030\001 \001(\t\"!\n\017Ba" +
+      "lanceResponse\022\016\n\006amount\030\001 \001(\0012\277\001\n\006Wallet" +
+      "\022:\n\007Deposit\022\025.wallet.WalletRequest\032\026.wal" +
+      "let.WalletResponse\"\000\022;\n\010Withdraw\022\025.walle" +
+      "t.WalletRequest\032\026.wallet.WalletResponse\"" +
+      "\000\022<\n\007Balance\022\026.wallet.BalanceRequest\032\027.w" +
+      "allet.BalanceResponse\"\000B#\n\022io.clertonraf" +
+      ".grpcB\013WalletProtoP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -66,6 +79,18 @@ public final class WalletProto {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_wallet_WalletResponse_descriptor,
         new java.lang.String[] { "Message", });
+    internal_static_wallet_BalanceRequest_descriptor =
+      getDescriptor().getMessageTypes().get(2);
+    internal_static_wallet_BalanceRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_wallet_BalanceRequest_descriptor,
+        new java.lang.String[] { "User", });
+    internal_static_wallet_BalanceResponse_descriptor =
+      getDescriptor().getMessageTypes().get(3);
+    internal_static_wallet_BalanceResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_wallet_BalanceResponse_descriptor,
+        new java.lang.String[] { "Amount", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)
