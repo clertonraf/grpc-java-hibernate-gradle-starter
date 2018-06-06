@@ -4,10 +4,14 @@ import io.clertonraf.grpc.dao.WalletDAO;
 import io.clertonraf.grpc.domain.Account;
 import io.clertonraf.grpc.domain.Currency;
 import io.clertonraf.grpc.domain.Wallet;
+import io.clertonraf.grpc.domain.WalletPK;
 import io.clertonraf.grpc.util.HibernateUtil;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.mapping.PrimaryKey;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 public class WalletDAOImpl implements WalletDAO {
@@ -49,11 +53,15 @@ public class WalletDAOImpl implements WalletDAO {
         Session session = getSession();
         session.beginTransaction();
 
-        return (Wallet) this.getSession()
+        /*Account account = (Account) this.getSession().get(Account.class,user);
+        WalletPK walletPK = new WalletPK();
+        walletPK.setCurrency(currency);
+        walletPK.setAccount(account);
+        return (Wallet)this.getSession().get(Wallet.class, walletPK);*/
+        /*return (Wallet) this.getSession()
                 .createCriteria(Wallet.class)
-                .add(
-                        Restrictions.and(Restrictions.eq("account.user",user), Restrictions.eq("currency",currency)))
-                .uniqueResult();
+                .add(Restrictions.eq("walletPK.user",user))
+                .uniqueResult();*/
     }
 
 

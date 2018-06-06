@@ -2,7 +2,6 @@ package io.clertonraf.grpc.domain;
 
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -15,7 +14,7 @@ public class Account {
     @Version
     private int version;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "account")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "walletPK.account")
     private Set<Wallet> wallets;
 
     public Set<Wallet> getWallets() {
