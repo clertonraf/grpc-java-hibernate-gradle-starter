@@ -89,6 +89,28 @@ task walletClient(type: CreateStartScripts) {
     classpath = jar.outputs.files + project.configurations.runtime
 }
 
+task fatJarClient(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'Client',
+                'Implementation-Version': version,
+                'Main-Class': 'io.clertonraf.grpc.WalletClient'
+    }
+    baseName = project.name + '-client'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
+task fatJarServer(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'Server',
+                'Implementation-Version': version,
+                'Main-Class': 'io.clertonraf.grpc.WalletServer'
+    }
+    baseName = project.name + '-server'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
 applicationDistribution.into("bin") {
     from(walletServer)
     from(walletClient)

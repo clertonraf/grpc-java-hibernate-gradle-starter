@@ -16,7 +16,9 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private BalanceResponse() {
-    amount_ = 0D;
+    balanceEUR_ = 0D;
+    balanceGBR_ = 0D;
+    balanceUSD_ = 0D;
   }
 
   @java.lang.Override
@@ -52,7 +54,17 @@ private static final long serialVersionUID = 0L;
           }
           case 9: {
 
-            amount_ = input.readDouble();
+            balanceEUR_ = input.readDouble();
+            break;
+          }
+          case 17: {
+
+            balanceGBR_ = input.readDouble();
+            break;
+          }
+          case 25: {
+
+            balanceUSD_ = input.readDouble();
             break;
           }
         }
@@ -79,13 +91,31 @@ private static final long serialVersionUID = 0L;
             io.clertonraf.grpc.BalanceResponse.class, io.clertonraf.grpc.BalanceResponse.Builder.class);
   }
 
-  public static final int AMOUNT_FIELD_NUMBER = 1;
-  private double amount_;
+  public static final int BALANCEEUR_FIELD_NUMBER = 1;
+  private double balanceEUR_;
   /**
-   * <code>double amount = 1;</code>
+   * <code>double balanceEUR = 1;</code>
    */
-  public double getAmount() {
-    return amount_;
+  public double getBalanceEUR() {
+    return balanceEUR_;
+  }
+
+  public static final int BALANCEGBR_FIELD_NUMBER = 2;
+  private double balanceGBR_;
+  /**
+   * <code>double balanceGBR = 2;</code>
+   */
+  public double getBalanceGBR() {
+    return balanceGBR_;
+  }
+
+  public static final int BALANCEUSD_FIELD_NUMBER = 3;
+  private double balanceUSD_;
+  /**
+   * <code>double balanceUSD = 3;</code>
+   */
+  public double getBalanceUSD() {
+    return balanceUSD_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -100,8 +130,14 @@ private static final long serialVersionUID = 0L;
 
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (amount_ != 0D) {
-      output.writeDouble(1, amount_);
+    if (balanceEUR_ != 0D) {
+      output.writeDouble(1, balanceEUR_);
+    }
+    if (balanceGBR_ != 0D) {
+      output.writeDouble(2, balanceGBR_);
+    }
+    if (balanceUSD_ != 0D) {
+      output.writeDouble(3, balanceUSD_);
     }
     unknownFields.writeTo(output);
   }
@@ -111,9 +147,17 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (amount_ != 0D) {
+    if (balanceEUR_ != 0D) {
       size += com.google.protobuf.CodedOutputStream
-        .computeDoubleSize(1, amount_);
+        .computeDoubleSize(1, balanceEUR_);
+    }
+    if (balanceGBR_ != 0D) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeDoubleSize(2, balanceGBR_);
+    }
+    if (balanceUSD_ != 0D) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeDoubleSize(3, balanceUSD_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -132,9 +176,17 @@ private static final long serialVersionUID = 0L;
 
     boolean result = true;
     result = result && (
-        java.lang.Double.doubleToLongBits(getAmount())
+        java.lang.Double.doubleToLongBits(getBalanceEUR())
         == java.lang.Double.doubleToLongBits(
-            other.getAmount()));
+            other.getBalanceEUR()));
+    result = result && (
+        java.lang.Double.doubleToLongBits(getBalanceGBR())
+        == java.lang.Double.doubleToLongBits(
+            other.getBalanceGBR()));
+    result = result && (
+        java.lang.Double.doubleToLongBits(getBalanceUSD())
+        == java.lang.Double.doubleToLongBits(
+            other.getBalanceUSD()));
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -146,9 +198,15 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + AMOUNT_FIELD_NUMBER;
+    hash = (37 * hash) + BALANCEEUR_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-        java.lang.Double.doubleToLongBits(getAmount()));
+        java.lang.Double.doubleToLongBits(getBalanceEUR()));
+    hash = (37 * hash) + BALANCEGBR_FIELD_NUMBER;
+    hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+        java.lang.Double.doubleToLongBits(getBalanceGBR()));
+    hash = (37 * hash) + BALANCEUSD_FIELD_NUMBER;
+    hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+        java.lang.Double.doubleToLongBits(getBalanceUSD()));
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -278,7 +336,11 @@ private static final long serialVersionUID = 0L;
     }
     public Builder clear() {
       super.clear();
-      amount_ = 0D;
+      balanceEUR_ = 0D;
+
+      balanceGBR_ = 0D;
+
+      balanceUSD_ = 0D;
 
       return this;
     }
@@ -302,7 +364,9 @@ private static final long serialVersionUID = 0L;
 
     public io.clertonraf.grpc.BalanceResponse buildPartial() {
       io.clertonraf.grpc.BalanceResponse result = new io.clertonraf.grpc.BalanceResponse(this);
-      result.amount_ = amount_;
+      result.balanceEUR_ = balanceEUR_;
+      result.balanceGBR_ = balanceGBR_;
+      result.balanceUSD_ = balanceUSD_;
       onBuilt();
       return result;
     }
@@ -344,8 +408,14 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(io.clertonraf.grpc.BalanceResponse other) {
       if (other == io.clertonraf.grpc.BalanceResponse.getDefaultInstance()) return this;
-      if (other.getAmount() != 0D) {
-        setAmount(other.getAmount());
+      if (other.getBalanceEUR() != 0D) {
+        setBalanceEUR(other.getBalanceEUR());
+      }
+      if (other.getBalanceGBR() != 0D) {
+        setBalanceGBR(other.getBalanceGBR());
+      }
+      if (other.getBalanceUSD() != 0D) {
+        setBalanceUSD(other.getBalanceUSD());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -374,28 +444,80 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private double amount_ ;
+    private double balanceEUR_ ;
     /**
-     * <code>double amount = 1;</code>
+     * <code>double balanceEUR = 1;</code>
      */
-    public double getAmount() {
-      return amount_;
+    public double getBalanceEUR() {
+      return balanceEUR_;
     }
     /**
-     * <code>double amount = 1;</code>
+     * <code>double balanceEUR = 1;</code>
      */
-    public Builder setAmount(double value) {
+    public Builder setBalanceEUR(double value) {
       
-      amount_ = value;
+      balanceEUR_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>double amount = 1;</code>
+     * <code>double balanceEUR = 1;</code>
      */
-    public Builder clearAmount() {
+    public Builder clearBalanceEUR() {
       
-      amount_ = 0D;
+      balanceEUR_ = 0D;
+      onChanged();
+      return this;
+    }
+
+    private double balanceGBR_ ;
+    /**
+     * <code>double balanceGBR = 2;</code>
+     */
+    public double getBalanceGBR() {
+      return balanceGBR_;
+    }
+    /**
+     * <code>double balanceGBR = 2;</code>
+     */
+    public Builder setBalanceGBR(double value) {
+      
+      balanceGBR_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>double balanceGBR = 2;</code>
+     */
+    public Builder clearBalanceGBR() {
+      
+      balanceGBR_ = 0D;
+      onChanged();
+      return this;
+    }
+
+    private double balanceUSD_ ;
+    /**
+     * <code>double balanceUSD = 3;</code>
+     */
+    public double getBalanceUSD() {
+      return balanceUSD_;
+    }
+    /**
+     * <code>double balanceUSD = 3;</code>
+     */
+    public Builder setBalanceUSD(double value) {
+      
+      balanceUSD_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>double balanceUSD = 3;</code>
+     */
+    public Builder clearBalanceUSD() {
+      
+      balanceUSD_ = 0D;
       onChanged();
       return this;
     }

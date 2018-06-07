@@ -1,6 +1,7 @@
 package io.clertonraf.grpc.service;
 
 import java.math.BigDecimal;
+import java.util.Map;
 
 public interface WalletService {
 
@@ -8,5 +9,5 @@ public interface WalletService {
 
     String withdraw(int user, BigDecimal amount, String currency);
 
-    BigDecimal getBalance(int user);
+    Map<String, BigDecimal> getBalance(int user);
 }

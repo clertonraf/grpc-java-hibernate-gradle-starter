@@ -20,6 +20,10 @@ import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -85,19 +89,22 @@ public class WalletClient {
   }
 
     /** Balance */
-    public Double getBalance(String user)  {
+    public Map<String,Double> getBalance(String user)  {
         logger.info("Will try to greet " + user + " ...");
         BalanceRequest request = BalanceRequest.newBuilder().setUser(user).build();
         BalanceResponse response;
+        Map<String,Double> balances = new HashMap<>();
         try {
             response = blockingStub.balance(request);
+            balances.put("EUR",response.getBalanceEUR());
+            balances.put("GBR",response.getBalanceGBR());
+            balances.put("USD",response.getBalanceUSD());
         } catch (StatusRuntimeException e) {
             logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
             return null;
         }
 
-        logger.info("Deposit: " + response.getAmount());
-        return response.getAmount();
+        return balances;
     }
 
   public static void main(String[] args) throws Exception {

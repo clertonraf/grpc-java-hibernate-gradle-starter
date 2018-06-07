@@ -8,7 +8,17 @@ public interface BalanceResponseOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>double amount = 1;</code>
+   * <code>double balanceEUR = 1;</code>
    */
-  double getAmount();
+  double getBalanceEUR();
+
+  /**
+   * <code>double balanceGBR = 2;</code>
+   */
+  double getBalanceGBR();
+
+  /**
+   * <code>double balanceUSD = 3;</code>
+   */
+  double getBalanceUSD();
 }

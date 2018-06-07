@@ -16,6 +16,7 @@
 
 package io.clertonraf.grpc;
 
+import io.clertonraf.grpc.domain.Currency;
 import io.clertonraf.grpc.service.WalletService;
 import io.clertonraf.grpc.service.impl.WalletServiceImpl;
 import io.grpc.Server;
@@ -24,6 +25,7 @@ import io.grpc.stub.StreamObserver;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Map;
 import java.util.logging.Logger;
 
 /**
@@ -125,12 +127,13 @@ public class WalletServer {
       }
 
       public void balance(BalanceRequest request, StreamObserver<BalanceResponse> responseObserver) {
-           BalanceResponse reply = BalanceResponse
+          Map<String, BigDecimal> response = service.getBalance(Integer.parseInt(request.getUser()));
+        BalanceResponse reply = BalanceResponse
                    .newBuilder()
-                   .setAmount(
-                           service.getBalance(Integer.parseInt(request.getUser())).doubleValue()
-                   )
-                   .build();
+                   .setBalanceEUR(response.get(Currency.EUR.name()).doubleValue())
+                   .setBalanceGBR(response.get(Currency.GBR.name()).doubleValue())
+                .setBalanceUSD(response.get(Currency.USD.name()).doubleValue())
+                .build();
 
            responseObserver.onNext(reply);
            responseObserver.onCompleted();

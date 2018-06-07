@@ -3,9 +3,17 @@ package io.clertonraf.grpc.service.impl;
 import io.clertonraf.grpc.dao.WalletDAO;
 import io.clertonraf.grpc.dao.impl.WalletDAOImpl;
 import io.clertonraf.grpc.domain.Account;
+import io.clertonraf.grpc.domain.Currency;
+import io.clertonraf.grpc.domain.Wallet;
+import io.clertonraf.grpc.domain.WalletPK;
 import io.clertonraf.grpc.service.WalletService;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class WalletServiceImpl implements WalletService {
 
@@ -21,52 +29,45 @@ public class WalletServiceImpl implements WalletService {
         return WalletServiceImplHelper.INSTANCE;
     }
 
+    private void createAccount(int user, BigDecimal amount, String currency) {
+        Account account = new Account();
+        account.setUser(user);
+
+        Set<Wallet> walletSet = new HashSet<>();
+
+        for (Currency c : Currency.values()) {
+            Wallet wallet = new Wallet();
+
+            WalletPK walletId = new WalletPK();
+            walletId.setAccount(account);
+            walletId.setCurrency(c);
+            wallet.setWalletPK(walletId);
+
+            wallet.setBalance(c.name().equalsIgnoreCase(currency) ? amount : BigDecimal.valueOf(0.0));
+
+            walletSet.add(wallet);
+        }
+
+        account.setWallets(walletSet);
+
+        WalletDAO dao = WalletDAOImpl.getInstance();
+        dao.save(account);
+
+        walletSet.stream().forEach(w -> WalletDAOImpl.getInstance().save(w));
+    }
+
     @Override
     public synchronized String deposit(int user, BigDecimal amount, String currency) {
         WalletDAO dao = WalletDAOImpl.getInstance();
-        Account wallet = null; /*= dao.getWalletById(user);*/
+        Wallet wallet = dao.getWalletByIdAndCurrency(user, Currency.valueOf(currency));
 
         if(wallet == null) {
-            wallet = new Account();
-            wallet.setUser(user);
-
-           /* switch (Currency.valueOf(currency)) {
-                case USD:
-                    wallet.setBalanceEUR(BigDecimal.valueOf(0.0));
-                    wallet.setBalanceGBR(BigDecimal.valueOf(0.0));
-                    wallet.setBalanceUSD(amount);
-                    break;
-                case GBR:
-                    wallet.setBalanceEUR(BigDecimal.valueOf(0.0));
-                    wallet.setBalanceGBR(amount);
-                    wallet.setBalanceUSD(BigDecimal.valueOf(0.0));
-                    break;
-                default:
-                    wallet.setBalanceEUR(amount);
-                    wallet.setBalanceGBR(BigDecimal.valueOf(0.0));
-                    wallet.setBalanceUSD(BigDecimal.valueOf(0.0));
-            }*/
-
+            this.createAccount(user,amount,currency);
         } else {
-            BigDecimal newBalance;
-            /*switch (Currency.valueOf(currency)) {
-                case USD:
-                    newBalance = wallet.getBalanceUSD().add(amount);
-                    wallet.setBalanceUSD(newBalance);
-                    break;
-                case GBR:
-                    newBalance = wallet.getBalanceGBR().add(amount);
-                    wallet.setBalanceGBR(newBalance);
-                    break;
-                default:
-                    newBalance = wallet.getBalanceEUR().add(amount);
-                    wallet.setBalanceEUR(newBalance);
-            }*/
-
-            /*logger.info("My current balance is "+ newBalance.toString());*/
+            BigDecimal newBalance = wallet.getBalance().add(amount);
+            wallet.setBalance(newBalance);
+            dao.save(wallet);
         }
-
-        dao.save(wallet);
 
         return "ok";
     }
@@ -75,14 +76,14 @@ public class WalletServiceImpl implements WalletService {
     @Override
     public synchronized String withdraw(int user, BigDecimal amount, String currency) {
         WalletDAO dao = WalletDAOImpl.getInstance();
-        Account wallet = null; /*dao.getWalletById(user);*/
+        Wallet wallet = dao.getWalletByIdAndCurrency(user,Currency.valueOf(currency));
 
-        if(wallet == null || amount.subtract(amount).doubleValue() <= 0.0 ) {
+        if(wallet == null || wallet.getBalance().subtract(amount).doubleValue() < 0.0 ) {
             return "insufficient_funds";
         }
 
-        /*BigDecimal newBalance = wallet.getBalance().subtract(amount);
-        wallet.setBalance(newBalance);*/
+        BigDecimal newBalance = wallet.getBalance().subtract(amount);
+        wallet.setBalance(newBalance);
 
         dao.save(wallet);
 
@@ -90,16 +91,10 @@ public class WalletServiceImpl implements WalletService {
     }
 
     @Override
-    public synchronized BigDecimal getBalance(int user) {
+    public synchronized Map<String, BigDecimal> getBalance(int user) {
         WalletDAO dao = WalletDAOImpl.getInstance();
-        Account wallet = null; /*dao.getWalletById(user);*/
+        List<Wallet> wallets = dao.getWalletsById(user);
 
-        /*if(wallet == null ) {
-            return BigDecimal.valueOf(0.0);
-        }
-
-        return wallet.getBalance();*/
-
-        return BigDecimal.valueOf(0.0);
+        return wallets.stream().collect(Collectors.toMap(w -> w.getWalletPK().getCurrency().name(), w -> w.getBalance()));
     }
 }

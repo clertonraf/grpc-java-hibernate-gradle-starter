@@ -35,5 +35,7 @@ message BalanceRequest {
 }
 
 message BalanceResponse {
-  double amount = 1;
+  double balanceEUR = 1;
+  double balanceGBR = 2;
+  double balanceUSD = 3;
 }

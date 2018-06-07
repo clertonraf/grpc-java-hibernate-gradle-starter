@@ -8,7 +8,7 @@ import java.util.Objects;
 public class WalletPK implements Serializable {
 
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "user", nullable = false)
     @MapsId("user")
     private Account account;
