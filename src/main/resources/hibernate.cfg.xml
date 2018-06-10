@@ -5,7 +5,7 @@
     <session-factory>
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="hibernate.connection.url">
-            jdbc:mysql://127.0.0.1:3306/walletSyst?createDatabaseIfNotExist=true</property>
+            jdbc:mysql://grpc-java-hibernate-gradle-starter_mysql_server_1:3306/walletSyst?createDatabaseIfNotExist=true</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password">12345</property>
         <property name="hibernate.connection.pool_size">50</property>

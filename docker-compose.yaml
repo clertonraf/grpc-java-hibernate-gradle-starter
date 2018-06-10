@@ -1,25 +1,25 @@
 version: '3.3'
 
 services:
-  db:
+  mysql_server:
     image: mysql:latest
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: 12345
       MYSQL_DATABASE: Syst
-      MYSQL_USER: root
       MYSQL_PASSWORD: 12345
     ports:
       - "3306:3306"
     volumes:
       - ./db:/docker-entrypoint-initdb.d
   java:
-    container_name: walletClient
+    container_name: walletServer
     image: openjdk:8
     ports:
       - "50051:50051"
     depends_on:
-      - db
+      - mysql_server
     volumes:
-      - /home/crismon-01/Documenti/TESI/Docker/mysqlLogin:/usr/src/myapp
-    working_dir: /usr/src/wallet/build/libs
-    command: bash -c "java -jar wallet-server-1.0-SNAPSHOT.jar"
+      - ./build/libs/grpc-java-hibernate-gradle-starter-server-1.0-SNAPSHOT.jar:/usr/local/grpc-java-hibernate-gradle-starter-server-1.0-SNAPSHOT.jar
+    working_dir: /usr/local
+    command: bash -c "java -jar grpc-java-hibernate-gradle-starter-server-1.0-SNAPSHOT.jar"
