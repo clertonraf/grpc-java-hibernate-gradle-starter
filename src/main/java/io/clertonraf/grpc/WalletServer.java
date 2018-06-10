@@ -131,7 +131,7 @@ public class WalletServer {
         BalanceResponse reply = BalanceResponse
                    .newBuilder()
                    .setBalanceEUR(response.get(Currency.EUR.name()).doubleValue())
-                   .setBalanceGBR(response.get(Currency.GBR.name()).doubleValue())
+                   .setBalanceGBP(response.get(Currency.GBP.name()).doubleValue())
                 .setBalanceUSD(response.get(Currency.USD.name()).doubleValue())
                 .build();
 

@@ -36,6 +36,6 @@ message BalanceRequest {
 
 message BalanceResponse {
   double balanceEUR = 1;
-  double balanceGBR = 2;
+  double balanceGBP = 2;
   double balanceUSD = 3;
 }

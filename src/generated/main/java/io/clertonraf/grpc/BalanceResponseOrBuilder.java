@@ -13,9 +13,9 @@ public interface BalanceResponseOrBuilder extends
   double getBalanceEUR();
 
   /**
-   * <code>double balanceGBR = 2;</code>
+   * <code>double balanceGBP = 2;</code>
    */
-  double getBalanceGBR();
+  double getBalanceGBP();
 
   /**
    * <code>double balanceUSD = 3;</code>

@@ -1,22 +1,25 @@
 package io.clertonraf.grpc.dao.impl;
 
+import io.clertonraf.grpc.WalletClient;
 import io.clertonraf.grpc.dao.WalletDAO;
 import io.clertonraf.grpc.domain.Account;
 import io.clertonraf.grpc.domain.Currency;
 import io.clertonraf.grpc.domain.Wallet;
 import io.clertonraf.grpc.domain.WalletPK;
 import io.clertonraf.grpc.util.HibernateUtil;
-import org.hibernate.FetchMode;
-import org.hibernate.Query;
-import org.hibernate.Session;
+import org.hibernate.*;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.mapping.PrimaryKey;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class WalletDAOImpl implements WalletDAO {
+
+    private static final Logger logger = Logger.getLogger(WalletDAOImpl.class.getName());
 
     private WalletDAOImpl(){}
 
@@ -36,8 +39,14 @@ public class WalletDAOImpl implements WalletDAO {
     public void save(Wallet wallet) {
         Session session = getSession();
         session.beginTransaction();
-        session.saveOrUpdate(wallet);
-        session.getTransaction().commit();
+        try {
+            session.saveOrUpdate(wallet);
+            session.getTransaction().commit();
+        } catch (StaleObjectStateException sose) {
+            logger.log(Level.SEVERE,"Lock",sose);
+            session.buildLockRequest(new LockOptions(LockMode.OPTIMISTIC_FORCE_INCREMENT));
+        }
+
         session.close();
     }
 

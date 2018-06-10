@@ -48,7 +48,7 @@ public final class WalletProto {
       "y\030\003 \001(\t\"!\n\016WalletResponse\022\017\n\007message\030\001 \001" +
       "(\t\"\036\n\016BalanceRequest\022\014\n\004user\030\001 \001(\t\"M\n\017Ba" +
       "lanceResponse\022\022\n\nbalanceEUR\030\001 \001(\001\022\022\n\nbal" +
-      "anceGBR\030\002 \001(\001\022\022\n\nbalanceUSD\030\003 \001(\0012\277\001\n\006Wa" +
+      "anceGBP\030\002 \001(\001\022\022\n\nbalanceUSD\030\003 \001(\0012\277\001\n\006Wa" +
       "llet\022:\n\007Deposit\022\025.wallet.WalletRequest\032\026" +
       ".wallet.WalletResponse\"\000\022;\n\010Withdraw\022\025.w" +
       "allet.WalletRequest\032\026.wallet.WalletRespo" +
@@ -91,7 +91,7 @@ public final class WalletProto {
     internal_static_wallet_BalanceResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_wallet_BalanceResponse_descriptor,
-        new java.lang.String[] { "BalanceEUR", "BalanceGBR", "BalanceUSD", });
+        new java.lang.String[] { "BalanceEUR", "BalanceGBP", "BalanceUSD", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)
